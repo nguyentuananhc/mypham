@@ -6,18 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+
     protected $guarded = ['id'];
 
-    public $additional_attributes = ['full_name'];
-
-    public function getFullNameAttribute()
-    {
-        return 'giang le';
-    }
+    protected $casts = [
+        'images' => 'array',
+        'is_available' => 'boolean',
+    ];
 
     public function translations()
     {
-        return $this->hasMany(ProductTranslation::class);
+        return $this->hasMany(ProductTranslation::class)->with(['lang']);
+    }
+
+    public function translation($langCode)
+    {
+        return $this->translations()->where('lang_code', $langCode)->first();
     }
 
     public function user()

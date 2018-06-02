@@ -15,6 +15,10 @@ return [
     |
     */
 
-    'driver' => 'gd'
+    'driver' => 'gd',
 
+    'products' => [
+        'width' => 242,
+        'height' => 242,
+    ]
 ];

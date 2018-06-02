@@ -15,7 +15,9 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('cover_image')->nullable();
+            $table->tinyInteger('sale')->default(0);
+            $table->text('images')->nullable();
+            $table->boolean('is_available')->default(true);
             $table->unsignedInteger('user_id')->references('id')->on('users');
             $table->timestamps();
         });

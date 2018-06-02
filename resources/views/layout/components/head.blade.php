@@ -3,6 +3,8 @@
     <meta content="" name="description">
     <meta content="share123bloggertemplate.com, thủ thuật facebook, template blogspot, theme wordpress, template blogger, up anh facebook, truy cap facebook, seo blogspot"
           name="keywords">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="/css/font-awesome.min.css" media="all">
     <link rel="stylesheet" href="/css/bootstrap.min.css" media="all">
     <link rel="stylesheet" href="/css/font.css" media="all">

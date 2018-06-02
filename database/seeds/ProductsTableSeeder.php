@@ -15,8 +15,16 @@ class ProductsTableSeeder extends Seeder
     {
         $faker = Factory::create();
         for ($i = 1; $i < 100; $i++) {
+            $imageConfig = config('image.products');
+            $images = [];
+            for ($j = 0; $j < random_int(3, 6); $j++) {
+                $images[] = $faker->imageUrl($imageConfig['width'], $imageConfig['height']);
+            }
             $product = Product::create([
                 'user_id' => 1,
+                'sale' => random_int(15, 50),
+                'images' => $images,
+                'is_available' => random_int(0, 1),
             ]);
 
             //Seed product translation
