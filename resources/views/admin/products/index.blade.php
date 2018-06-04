@@ -41,6 +41,9 @@
                                         {{__('string.name')}}
                                     </th>
                                     <th>
+                                        {{__('string.sale')}}
+                                    </th>
+                                    <th>
                                         {{ trans('string.images') }}
                                     </th>
                                     <th>
@@ -73,6 +76,9 @@
                                                 }
                                             @endphp
                                             {{ $name }}
+                                        </td>
+                                        <td>
+                                            {{ $product->sale }} (%)
                                         </td>
                                         <td>
                                             @if($product->images)
