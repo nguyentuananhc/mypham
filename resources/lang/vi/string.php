@@ -23,4 +23,14 @@
         'edit_product' => 'Sửa sản phẩm',
         'choose_image' => 'Chọn hình',
         'delete_this_lang' => 'Xóa bài cho ngôn ngữ này',
+        'cover_image' => 'Hình đại diện',
+        'post' => 'Bài viết',
+        'post_title' => 'Tiêu đề bài viết',
+        'status' => 'Trạng thái',
+        'published' => 'Đã xuất bản',
+        'unpublished' => 'Chưa xuất bản',
+        'create_post' => 'Thêm bài viết',
+        'cancel' => 'Hủy bỏ',
+        'delete' => 'Xóa',
+        'edit_post' => 'Sủa bài viêt'
     ];

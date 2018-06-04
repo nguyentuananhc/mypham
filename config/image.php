@@ -20,5 +20,10 @@ return [
     'products' => [
         'width' => 242,
         'height' => 242,
+    ],
+
+    'posts' => [
+        'width' => 242,
+        'height' => 242,
     ]
 ];

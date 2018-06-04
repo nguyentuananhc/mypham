@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Helper\ProductService;
+use App\Services\ProductService;
 use App\Http\Requests\Admin\ProductRequest;
 use App\Language;
 use App\Product;

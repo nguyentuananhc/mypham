@@ -1,11 +1,11 @@
 @extends('voyager::master')
-@section('page_title', __('voyager::generic.viewing').' '.__('string.product'))
+@section('page_title', __('voyager::generic.viewing').' '.__('string.post'))
 @section('page_header')
     <div class="container-fluid">
         <h1 class="page-title">
-            <i class="icon voyager-pie-chart"></i> {{ __('string.product') }}
+            <i class="icon voyager-pie-chart"></i> {{ __('string.post') }}
         </h1>
-        <a href="{{ route('admin.products.create', ['langCode' => 'vi', 'id' => null]) }}"
+        <a href="{{ route('admin.posts.create', ['langCode' => 'vi', 'id' => null]) }}"
            class="btn btn-success btn-add-new">
             <i class="voyager-plus"></i> <span>{{ __('voyager::generic.add_new') }}</span>
         </a>
@@ -21,7 +21,7 @@
 @stop
 
 @section('content')
-    @include('admin.components.bulk-delete', ['route' => 'admin.products.index'])
+    @include('admin.components.bulk-delete', ['route' => 'admin.posts.index'])
     <div id="voyager-notifications"></div>
     <div class="page-content browse container-fluid">
         <div class="alerts">
@@ -41,7 +41,7 @@
                                         {{__('string.name')}}
                                     </th>
                                     <th>
-                                        {{ trans('string.images') }}
+                                        {{ trans('string.cover_image') }}
                                     </th>
                                     <th>
                                         {{ trans('string.created_at') }}
@@ -56,53 +56,47 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @forelse($products as $product)
+                                @forelse($posts as $post)
                                     <tr>
                                         <td>
-                                            <input type="checkbox" name="row_id" id="checkbox_{{ $product->id }}"
-                                                   value="{{ $product->id }}">
+                                            <input type="checkbox" name="row_id" id="checkbox_{{ $post->id }}"
+                                                   value="{{ $post->id }}">
                                         </td>
                                         <td>
                                             @php
-                                                $name = '';
-                                                $translation = $product->translations->where('lang_code', config('app.fallback_locale'))->first();
+                                                $title = '';
+                                                $translation = $post->translations->where('lang_code', config('app.fallback_locale'))->first();
                                                 if($translation) {
-                                                    $name = $translation->name;
-                                                }elseif(count($product->translations)) {
-                                                    $name = $product->translations[0]->name;
+                                                    $title = $translation->title;
+                                                }elseif(count($post->translations)) {
+                                                    $title = $post->translations[0]->title;
                                                 }
                                             @endphp
-                                            {{ $name }}
+                                            {{ $title }}
                                         </td>
                                         <td>
-                                            @if($product->images)
-                                                <div class="sm-product-images">
-                                                    @foreach($product->images as $image)
-                                                        <img src="{{ cloud_link($image) }}"/>
-                                                    @endforeach
-                                                </div>
-                                            @endif
+                                            <img src="{{ cloud_link($post->cover_image) }}"/>
                                         </td>
                                         <td>
-                                            <p>{{ $product->created_at }}</p>
+                                            <p>{{ $post->created_at }}</p>
                                         </td>
                                         <td>
-                                            <p>{{ $product->user->name }}</p>
+                                            <p>{{ $post->user->name }}</p>
 
                                         </td>
                                         <td>
-                                            @foreach($product->translations as $translation)
-                                                <a href="{{ route('admin.products.edit', ['langCode' => $translation->lang_code, 'id' => $product->id]) }}"
+                                            @foreach($post->translations as $translation)
+                                                <a href="{{ route('admin.posts.edit', ['langCode' => $translation->lang_code, 'id' => $post->id]) }}"
                                                    class="btn btn-sm btn-primary edit">
                                                     <span class="hidden-xs hidden-sm">{{ $translation->lang->name }}</span>
                                                 </a>
                                             @endforeach
-                                            @if(count($product->translations) < count($languages))
+                                            @if(count($post->translations) < count($languages))
                                                 @php
-                                                    $productLangs = $product->translations->pluck('lang_code')->toArray();
-                                                    $diff = array_diff($languages->pluck('code')->toArray(), $productLangs);
+                                                    $postLangs = $post->translations->pluck('lang_code')->toArray();
+                                                    $diff = array_diff($languages->pluck('code')->toArray(), $postLangs);
                                                 @endphp
-                                                <a href="{{ route('admin.products.create', ['langCode' => head($diff), 'id' => $product->id]) }}"
+                                                <a href="{{ route('admin.posts.create', ['langCode' => head($diff), 'id' => $post->id]) }}"
                                                    title="Add"
                                                    class="btn btn-sm btn-success">
                                                     <i class="voyager-plus"></i>
@@ -113,8 +107,8 @@
                                         <td class="no-sort no-click" id="bread-actions">
                                             <a href="javascript:;" title="Delete"
                                                class="btn btn-sm btn-danger pull-right delete"
-                                               data-id="{{ $product->id }}"
-                                               id="delete-16">
+                                               data-id="{{ $post->id }}"
+                                               id="delete-{{ $post->id }}">
                                                 <i class="voyager-trash"></i>
                                                 <span class="hidden-xs hidden-sm">Delete</span>
                                             </a>
@@ -132,7 +126,6 @@
         </div>
     </div>
 
-
     <div class="modal modal-danger fade" tabindex="-1" id="delete_modal" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -144,7 +137,7 @@
                         <i class="voyager-trash"></i> {{ trans('message.confirm_delete') }}</h4>
                 </div>
                 <div class="modal-footer">
-                    <form action="#" id="delete_form" method="POST">
+                    <form action="" id="delete_form" method="POST">
                         <input type="hidden" name="_method" value="DELETE">
                         {{ csrf_field() }}
                         <input type="submit" class="btn btn-danger pull-right delete-confirm"
@@ -187,7 +180,7 @@
 
       var deleteFormAction
       $('td').on('click', '.delete', function (e) {
-        $('#delete_form')[0].action = '{{ route('admin.products.destroy', ['id' => '__id']) }}'.replace('__id', $(this).data('id'))
+        $('#delete_form')[0].action = '{{ route('admin.posts.destroy', ['id' => '__id']) }}'.replace('__id', $(this).data('id'))
         $('#delete_modal').modal('show')
       })
     </script>

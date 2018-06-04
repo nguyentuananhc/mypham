@@ -150,6 +150,10 @@ return [
         'lang_code' => [
             'required' => 'Phải có ngôn ngữ',
         ],
+        'title' => [
+            'required' => 'Phải nhập tiêu đề',
+            'max' => 'Bạn đã nhập quá số ký tự cho phép',
+        ]
     ],
 
     /*

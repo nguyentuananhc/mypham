@@ -32,5 +32,22 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::group(['prefix' => 'product-translations', 'middleware' => 'admin.user', 'as' => 'admin.product_translations.'], function () {
         Route::delete('{id}', 'ProductTranslationController@destroy')->name('destroy');
     });
+
+    Route::group(['prefix' => 'posts', 'middleware' => 'admin.user', 'as' => 'admin.posts.'], function () {
+        Route::get('/', 'PostController@index')->name('index');
+
+        Route::get('{langCode}/create/{id?}', 'PostController@create')->name('create');
+        Route::post('{langCode}/create/{id?}', 'PostController@store')->name('store');
+
+        Route::get('{langCode}/{id}/edit', 'PostController@edit')->name('edit');
+        Route::put('{langCode}/{id}/edit', 'PostController@update')->name('update');
+
+        Route::delete('/0', 'PostController@bulkDestroy')->name('bulkDestroy');
+        Route::delete('{id}', 'PostController@destroy')->name('destroy');
+    });
+
+    Route::group(['prefix' => 'post-translations', 'middleware' => 'admin.user', 'as' => 'admin.post_translations.'], function () {
+        Route::delete('{id}', 'PostTranslationController@destroy')->name('destroy');
+    });
     Voyager::routes();
 });

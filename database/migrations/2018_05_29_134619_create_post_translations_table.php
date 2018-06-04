@@ -18,7 +18,8 @@ class CreatePostTranslationsTable extends Migration
             $table->unsignedInteger('post_id')->references('id')->on('posts');
             $table->string('lang_code');
             $table->string('title');
-            $table->text('description');
+            $table->text('description')->nullable();
+            $table->unique(['lang_code', 'post_id']);
             $table->text('content');
             $table->timestamps();
         });

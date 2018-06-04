@@ -17,6 +17,7 @@ class CreatePostsTable extends Migration
             $table->increments('id');
             $table->string('cover_image')->nullable();
             $table->unsignedInteger('user_id')->references('id')->on('users');
+            $table->tinyInteger('status')->default(\App\Post::STATUS_PUBLISHED);
             $table->timestamps();
         });
     }

@@ -5,12 +5,12 @@
     <link rel="stylesheet" href="/css/admin/custom.css">
 @stop
 
-@section('page_title', trans('string.edit_product'))
+@section('page_title', trans('string.edit_post'))
 
 @section('page_header')
     <h1 class="page-title">
         <i class="icon voyager-pie-chart"></i>
-        {{ trans('string.edit_product') }}
+        {{ trans('string.create_post') }}
     </h1>
 @stop
 
@@ -22,9 +22,9 @@
                 <div class="panel panel-bordered">
                     <!-- form start -->
                     <form class="form-edit-add"
-                          action="{{ route('admin.products.update', ['id' => $id, 'langCode' => $langCode]) }}"
+                          action="{{ route('admin.posts.update', ['id' => $id, 'langCode' => $langCode]) }}"
                           method="POST" enctype="multipart/form-data">
-                        <input type="hidden" name="_method" value="PUT"/>
+                        <input type="hidden" name="_method" value="put"/>
                         <!-- CSRF TOKEN -->
                         {{ csrf_field() }}
 
@@ -39,30 +39,13 @@
                                     </ul>
                                 </div>
                         @endif
+
                         <!-- Adding / Editing -->
                             <div class="form-group row">
                                 <div class="col-md-10">
-                                    <label for="name">{{ trans('string.product_name') }}</label>
-                                    <input id="name" type="text" name="name"
-                                           value="{{ old('name', $product->translation->name) }}"
-                                           class="form-control"/>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <div class="col-md-10">
-                                    <label for="price">{{ trans('string.price') }}</label>
-                                    <input id="price" type="text" name="price"
-                                           value="{{ old('price', $product->translation->price) }}"
-                                           class="form-control"/>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <div class="col-md-10">
-                                    <label for="sale">{{ trans('string.sale') }}</label>
-                                    <input id="sale" type="text" name="sale"
-                                           value="{{ old('sale', $product->sale) }}"
+                                    <label for="name">{{ trans('string.post_title') }}</label>
+                                    <input id="name" type="text" name="title"
+                                           value="{{ old('title', $post->translation->title) }}"
                                            class="form-control"/>
                                 </div>
                             </div>
@@ -83,38 +66,36 @@
                                 <div class="col-md-10">
                                     <label for="description">{{ trans('string.description') }}</label>
                                     <textarea id="description" type="text" name="description"
-                                              class="form-control">{{ old('description', $product->translation->description) }}</textarea>
+                                              class="form-control">{{ old('description', $post->translation->description) }}</textarea>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="richtechcontent">{{ trans('string.content') }}</label>
                                 <textarea name="content" id="richtechcontent" class="form-control richTextBox" cols="30"
-                                          rows="10">{{ old('content', $product->translation->content) }}</textarea>
+                                          rows="10">{{ old('content', $post->translation->content) }}</textarea>
                             </div>
 
                             <div class="form-group">
-                                <label for="product_images">{{ trans('string.product_images') }}</label>
+                                <label for="cover_image">{{ trans('string.cover_image') }}</label>
                                 <div>
-                                    <button id="add_product_image"
+                                    <button type="button" id="add_cover_image"
                                             class="btn btn-primary btn-sm">{{ trans('string.choose_image') }}</button>
-                                    <button id="clear_product_image"
-                                            class="btn btn-danger btn-sm">{{ trans('string.clear') }}</button>
                                 </div>
-                                <input type="file" id="product_images" multiple name="product_images[]"/>
-                                <div id="preview-product-images">
-                                    @if(isset($product) && $product->images)
-                                        @foreach($product->images as $image)
-                                            <div class="mr-2"><img src="{{ cloud_link($image) }}"/></div>
-                                        @endforeach
+                                <input type="file" id="cover_image" name="cover_image"/>
+                                <div id="preview-cover-image">
+                                    @if(isset($post) && $post->cover_image)
+                                        <img src="{{ cloud_link($post->cover_image) }}"/>
                                     @endif
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="status">{{ trans('string.available') }}</label>
-                                <input type="checkbox" id="status"
-                                       name="is_available" {{ $product->is_available ? 'checked' : '' }}/>
+                                <label for="status">{{ trans('string.status') }}</label>
+                                <select name="status" id="status" class="form-control">
+                                    <option value="0" {{ $post->selected ?: 'selected' }}>{{ trans('string.unpublished') }}</option>
+                                    <option value="1" {{ $post->selected ?: 'selected' }}>{{ trans('string.published') }}</option>
+                                </select>
                             </div>
 
                         </div><!-- panel-body -->
@@ -143,8 +124,8 @@
     </div>
 
     @include('admin.components.confirm-modal-delete', [
-        'id' => $product->translation->id,
-        'route' => 'admin.product_translations.destroy'
+        'id' => $post->translation->id,
+        'route' => 'admin.post_translations.destroy',
     ])
     <!-- End Delete File Modal -->
 @stop
@@ -153,34 +134,21 @@
     <script>
       $('document').ready(function () {
         //handle product image change
-        $('#add_product_image').click(function () {
-          $('#product_images').click()
+        $('#add_cover_image').click(function () {
+          $('#cover_image').click()
           return false
         })
 
 
-        $('#clear_product_image').click(function () {
-          $('#product_images').val('')
+        $('#cover_image').change(function () {
           $('#preview-product-images').html('')
-          return false
-        })
-
-        $('#product_images').change(function () {
-          $('#preview-product-images').html('')
-          if (this.files) {
-            var filesAmount = this.files.length
-
-            for (var i = 0; i < filesAmount; i++) {
-              var reader = new FileReader()
-
-              reader.onload = function (event) {
-                $('#preview-product-images').append('<div class="mr-2"><img src="' + event.target.result + '"/> </div>')
-              }
-
-              reader.readAsDataURL(this.files[i])
+          if (this.files && this.files[0]) {
+            var reader = new FileReader()
+            reader.onload = function (event) {
+              $('#preview-cover-image').html('<img src="' + event.target.result + '"/>')
             }
-          } else {
-            $('#preview-product-images').html('')
+
+            reader.readAsDataURL(this.files[0])
           }
         })
       })

@@ -21,6 +21,7 @@ class CreateProductTranslationsTable extends Migration
             $table->string('name');
             $table->text('description');
             $table->text('content');
+            $table->unique(['lang_code', 'product_id']);
             $table->timestamps();
         });
     }
