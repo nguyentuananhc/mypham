@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Traits\TranslationRelationshipTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+    use TranslationRelationshipTrait;
     protected $guarded = ['id'];
 
     const STATUS_PUBLISHED = 1;
@@ -19,10 +21,5 @@ class Post extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function translation($langCode)
-    {
-        return $this->translations()->where('lang_code', $langCode)->first();
     }
 }

@@ -28,7 +28,7 @@ class ProductService
         }
 
         $product->translations()
-            ->create($request->only(['name', 'price', 'name', 'description', 'content', 'lang_code']));
+            ->create($request->only(['name', 'price', 'name', 'description', 'content', 'lang_code', 'category_id']));
     }
 
     public function update(Request $request, $id)
@@ -42,7 +42,7 @@ class ProductService
         $product->save();
 
         $product->translations()->where('lang_code', $request->get('lang_code'))
-            ->update($request->only(['name', 'price', 'name', 'description', 'content']));
+            ->update($request->only(['name', 'price', 'name', 'description', 'content', 'category_id']));
     }
 
 

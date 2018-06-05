@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\Admin\CategoryRequest;
 use App\Category;
-use App\Services\ProductService;
-use App\Http\Requests\Admin\ProductRequest;
+use App\CategoryTranslation;
+use App\Services\CategoryService;
 use App\Language;
-use App\Product;
-use App\ProductTranslation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Validation\Rule;
 
-class ProductController extends Controller
+class CategoryController extends Controller
 {
     protected $service;
+    protected $indexRoute = 'admin.categories.index';
 
-    public function __construct(ProductService $service)
+    public function __construct(CategoryService $service)
     {
         $this->service = $service;
     }
@@ -28,10 +28,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::with(['translations', 'user'])->orderBy('id', 'DESC')->get();
+        $categories = Category::with(['translations'])->orderBy('id', 'DESC')->get();
         $languages = Language::all();
 
-        return view('admin.products.index', compact('products', 'languages'));
+        return view($this->indexRoute, compact('categories', 'languages'));
     }
 
     /**
@@ -44,40 +44,36 @@ class ProductController extends Controller
     public function create($langCode, $id = null)
     {
         $exceptLang = [];
-        $product = Product::find($id);
-        $categories = Category::with(['translations'])->get();
-        if ($product) {
-            $exceptLang = ProductTranslation::where('product_id', $id)->get()->pluck('lang_code')->toArray();
-            $product->translation = $product->translation($langCode);
+        $category = Category::find($id);
+        if ($category) {
+            $exceptLang = CategoryTranslation::where('category_id', $id)->get()->pluck('lang_code')->toArray();
+            $category->translation = $category->translation($langCode);
         }
         $languages = Language::whereNotIn('code', $exceptLang)->get();
 
-        return view('admin.products.create', compact('languages', 'langCode', 'id', 'product', 'categories'));
+        return view('admin.categories.create', compact('languages', 'langCode', 'id', 'category'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param ProductRequest $request
+     * @param CategoryRequest $request
      * @param $langCode
      * @param null $id
      * @return \Illuminate\Http\Response
      */
-    public function store(ProductRequest $request, $langCode, $id = null)
+    public function store(CategoryRequest $request, $langCode, $id = null)
     {
         $rule = [];
         if (!$id) {
-            $productLang = ProductTranslation::where('product_id', $id)->pluck('lang_code')->toArray();
-            $availableLang = Language::whereNotIn('code', $productLang)->pluck('code')->toArray();
-
-            $rule['product_images'] = 'required';
+            $itemLang = CategoryTranslation::where('category_id', $id)->pluck('lang_code')->toArray();
+            $availableLang = Language::whereNotIn('code', $itemLang)->pluck('code')->toArray();
             $rule['lang_code'] = ['required', Rule::in($availableLang)];
-
         }
         $this->validate($request, $rule);
         $this->service->store($request, $id);
 
-        return redirect()->route('admin.products.index');
+        return redirect()->route($this->indexRoute);
     }
 
     /**
@@ -89,33 +85,32 @@ class ProductController extends Controller
      */
     public function edit($langCode, $id)
     {
-        $categories = Category::with(['translations'])->get();
-        $productLang = ProductTranslation::where('product_id', $id)->pluck('lang_code')->toArray();
-        $languages = Language::whereNotIn('code', $productLang)->orWhere('code', $langCode)->get();
-        $product = Product::findOrFail($id);
-        $product->translation = $product->translation($langCode);
+        $categoryLang = CategoryTranslation::where('category_id', $id)->pluck('lang_code')->toArray();
+        $languages = Language::whereNotIn('code', $categoryLang)->orWhere('code', $langCode)->get();
+        $category = Category::findOrFail($id);
+        $category->translation = $category->translation($langCode);
 
-        return view('admin.products.edit', compact('languages', 'id', 'langCode', 'product', 'categories'));
+        return view('admin.categories.edit', compact('languages', 'id', 'langCode', 'category'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param ProductRequest $request
+     * @param CategoryRequest $request
      * @param $langCode
      * @param  int $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(ProductRequest $request, $langCode, $id)
+    public function update(CategoryRequest $request, $langCode, $id)
     {
-        $productLang = ProductTranslation::where('product_id', $id)->pluck('lang_code')->toArray();
-        $availableLang = Language::whereNotIn('code', $productLang)->orWhere('code', $langCode)->pluck('code')->toArray();
+        $categoryLang = CategoryTranslation::where('category_id', $id)->pluck('lang_code')->toArray();
+        $availableLang = Language::whereNotIn('code', $categoryLang)->orWhere('code', $langCode)->pluck('code')->toArray();
         $this->validate($request, [
             'lang_code' => ['required', Rule::in($availableLang)],
         ]);
         $this->service->update($request, $id);
 
-        return redirect()->route('admin.products.index');
+        return redirect()->route($this->indexRoute);
     }
 
     /**

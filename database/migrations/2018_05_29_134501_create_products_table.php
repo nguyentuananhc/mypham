@@ -17,8 +17,11 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->tinyInteger('sale')->default(0);
             $table->text('images')->nullable();
+            $table->unsignedInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('users');
             $table->boolean('is_available')->default(true);
-            $table->unsignedInteger('user_id')->references('id')->on('users');
+            $table->unsignedInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

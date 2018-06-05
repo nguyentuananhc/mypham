@@ -32,5 +32,8 @@
         'create_post' => 'Thêm bài viết',
         'cancel' => 'Hủy bỏ',
         'delete' => 'Xóa',
-        'edit_post' => 'Sủa bài viêt'
+        'edit_post' => 'Sủa bài viêt',
+        'edit_category' => 'Sửa danh mục',
+        'create_category' => 'Thêm danh mục',
+        'category' => 'Danh mục',
     ];

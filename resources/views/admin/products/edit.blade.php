@@ -51,6 +51,20 @@
 
                             <div class="form-group row">
                                 <div class="col-md-10">
+                                    <label for="category">{{ trans('string.category') }}</label>
+                                    <select name="category_id" id="category" class="form-control">
+                                        @foreach($categories as $category)
+                                            @if(count($category->translations) > 0)
+                                                <option value="{{ $category->id }}"
+                                                        {{ $category->id === $product->category_id ? 'selected' : '' }}>{{ $category->translations[0]->name }}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-10">
                                     <label for="price">{{ trans('string.price') }}</label>
                                     <input id="price" type="text" name="price"
                                            value="{{ old('price', $product->translation->price) }}"

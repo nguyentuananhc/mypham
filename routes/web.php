@@ -49,5 +49,22 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::group(['prefix' => 'post-translations', 'middleware' => 'admin.user', 'as' => 'admin.post_translations.'], function () {
         Route::delete('{id}', 'PostTranslationController@destroy')->name('destroy');
     });
+
+    Route::group(['prefix' => 'categories', 'middleware' => 'admin.user', 'as' => 'admin.categories.'], function () {
+        Route::get('/', 'CategoryController@index')->name('index');
+
+        Route::get('{langCode}/create/{id?}', 'CategoryController@create')->name('create');
+        Route::post('{langCode}/create/{id?}', 'CategoryController@store')->name('store');
+
+        Route::get('{langCode}/{id}/edit', 'CategoryController@edit')->name('edit');
+        Route::put('{langCode}/{id}/edit', 'CategoryController@update')->name('update');
+
+        Route::delete('/0', 'CategoryController@bulkDestroy')->name('bulkDestroy');
+        Route::delete('{id}', 'CategoryController@destroy')->name('destroy');
+    });
+
+    Route::group(['prefix' => 'category-translations', 'middleware' => 'admin.user', 'as' => 'admin.category_translations.'], function () {
+        Route::delete('{id}', 'CategoryTranslationController@destroy')->name('destroy');
+    });
     Voyager::routes();
 });

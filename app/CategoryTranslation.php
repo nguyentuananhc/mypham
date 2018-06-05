@@ -5,7 +5,7 @@ namespace App;
 use App\Traits\LangRelationshipTrait;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductTranslation extends Model
+class CategoryTranslation extends Model
 {
     protected $guarded = ['id'];
 
