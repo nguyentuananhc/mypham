@@ -6,7 +6,7 @@
     @include('home.about')
     <!--/ End phần giới thiệu -->
     <!-- Sản phẩm bán chạy -->
-    @include('home.popular')
+    {{--@include('home.popular')--}}
     <!--/Sản phẩm bán chạy -->
     <!-- Chương trình khuyến mãi -->
     @include('home.sale')

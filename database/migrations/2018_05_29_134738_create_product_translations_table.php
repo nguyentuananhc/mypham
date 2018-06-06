@@ -16,7 +16,7 @@ class CreateProductTranslationsTable extends Migration
         Schema::create('product_translations', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('product_id')->references('id')->on('products');
-            $table->integer('price');
+            $table->integer('price')->nullable();
             $table->string('lang_code');
             $table->string('name');
             $table->text('description');

@@ -8,7 +8,6 @@
                 </h2>
             </div>
             <div class="row">
-                <script src="./assets/Tin-tuc"></script>
                 <div class="col-lg-6 col-md-6">
                     <div class="latest-news">
                         <div class="news-img">

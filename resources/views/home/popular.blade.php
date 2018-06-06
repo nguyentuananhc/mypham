@@ -29,10 +29,6 @@
             <div class="tab-content organic-content row">
                 <div class="tab-pane fade active in" id="naturix-tab-1">
                     <div class="product_wb">
-                        <script language="JavaScript"> //<![CDATA[
-                          document.write('<script src="/feeds/posts/default/-/san-pham?max-results=' + 10 + '&orderby=published&alt=json-in-script&callback=labelproduct01"><\/script>')      //]]>
-                        </script>
-                        <script src="./assets/san-pham(1)"></script>
                         <div class="motsp_wb col-sm-6 col-xs-6 item simpleCart_shelfItem">
                             <div class="product-box">
                                 <div class="product-media">
@@ -392,10 +388,6 @@
                 </div>
                 <div class="tab-pane fade " id="naturix-tab-2">
                     <div class="product_wb">
-                        <script language="JavaScript"> //<![CDATA[
-                          document.write('<script src="/feeds/posts/default/-/san-pham?max-results=' + 10 + '&orderby=published&alt=json-in-script&callback=labelproduct01"><\/script>')      //]]>
-                        </script>
-                        <script src="./assets/san-pham(1)"></script>
                         <div class="motsp_wb col-sm-6 col-xs-6 item simpleCart_shelfItem">
                             <div class="product-box">
                                 <div class="product-media">
@@ -755,10 +747,6 @@
                 </div>
                 <div class="tab-pane fade " id="naturix-tab-3">
                     <div class="product_wb">
-                        <script language="JavaScript"> //<![CDATA[
-                          document.write('<script src="/feeds/posts/default/-/san-pham?max-results=' + 10 + '&orderby=published&alt=json-in-script&callback=labelproduct01"><\/script>')      //]]>
-                        </script>
-                        <script src="./assets/san-pham(1)"></script>
                         <div class="motsp_wb col-sm-6 col-xs-6 item simpleCart_shelfItem">
                             <div class="product-box">
                                 <div class="product-media">
@@ -1118,10 +1106,6 @@
                 </div>
                 <div class="tab-pane fade " id="naturix-tab-4">
                     <div class="product_wb">
-                        <script language="JavaScript"> //<![CDATA[
-                          document.write('<script src="/feeds/posts/default/-/san-pham?max-results=' + 10 + '&orderby=published&alt=json-in-script&callback=labelproduct01"><\/script>')      //]]>
-                        </script>
-                        <script src="./assets/san-pham(1)"></script>
                         <div class="motsp_wb col-sm-6 col-xs-6 item simpleCart_shelfItem">
                             <div class="product-box">
                                 <div class="product-media">

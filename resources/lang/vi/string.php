@@ -36,4 +36,9 @@
         'edit_category' => 'Sửa danh mục',
         'create_category' => 'Thêm danh mục',
         'category' => 'Danh mục',
+        'home' => 'Trang chủ',
+        'shop' => 'Cửa hàng',
+        'about_us' => 'Giới thiệu',
+        'contact' => 'Liên hệ',
+        'blog' => 'Blog',
     ];

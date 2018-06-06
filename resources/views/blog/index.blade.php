@@ -181,9 +181,6 @@
                         </h2>
                         <div class="divider-full-1"></div>
                         <div class="widget-post pt-15">
-                            <script language="JavaScript"> //<![CDATA[
-                              document.write("<script src=\"/feeds/posts/default/-/san-pham?max-results=" + 5 + "&orderby=published&alt=json-in-script&callback=labelproduct03\"><\/script>");      //]]>
-                            </script>
                             <script src="./assets/san-pham"></script>
                             <div class="random-prod">
                                 <div class="random-img">

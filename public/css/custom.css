@@ -121,3 +121,21 @@
   height: 400px;
   width: 100%;
 }
+
+.slide-title2 {
+  color: white;
+}
+#shelf-list {
+  margin-top: 50px;
+}
+
+@media (min-width: 1200px){
+  .organic-wrap .logo-img {
+    display: inline-block;
+    left: 0;
+    margin: auto;
+    position: absolute;
+    right: 0;
+    height: 126px;
+  }
+}
