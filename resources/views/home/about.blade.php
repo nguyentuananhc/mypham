@@ -10,7 +10,7 @@
                     </strong>
                 </h2>
                 <h4 class="sub-title">
-                    <span> Giới thiệu NATURIX </span>
+                    <span> Giới thiệu Pollyee </span>
                 </h4>
                 <p>"... Chúng tôi tự tin khẳng đinh rằng sản phẩm từ cửa hàng chúng tôi luôn đảm bảo về chất lượng
                     và

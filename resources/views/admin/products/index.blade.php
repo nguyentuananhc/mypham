@@ -5,7 +5,7 @@
         <h1 class="page-title">
             <i class="icon voyager-pie-chart"></i> {{ __('string.product') }}
         </h1>
-        <a href="{{ route('admin.products.create', ['langCode' => 'vi', 'id' => null]) }}"
+        <a href="{{ route('admin.products.create', ['langCode' => app()->getLocale(), 'id' => null]) }}"
            class="btn btn-success btn-add-new">
             <i class="voyager-plus"></i> <span>{{ __('voyager::generic.add_new') }}</span>
         </a>
@@ -78,7 +78,9 @@
                                             {{ $name }}
                                         </td>
                                         <td>
-                                            {{ $product->sale }} (%)
+                                            @if($product->sale)
+                                                {{ $product->sale }} (%)
+                                            @endif
                                         </td>
                                         <td>
                                             @if($product->images)

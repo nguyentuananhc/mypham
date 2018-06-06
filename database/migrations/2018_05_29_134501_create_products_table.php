@@ -15,7 +15,7 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
-            $table->tinyInteger('sale')->default(0);
+            $table->tinyInteger('sale')->nullable();
             $table->text('images')->nullable();
             $table->unsignedInteger('category_id');
             $table->foreign('category_id')->references('id')->on('users');

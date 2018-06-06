@@ -20,15 +20,15 @@ class ProductService
             'is_available' => $request->get('is_available') === 'on' ? 1 : 0,
             'user_id' => $request->user()->id,
             'sale' => $request->get('sale'),
+            'category_id' => $request->get('category_id'),
         ]);
 
         if ($request->hasFile('product_images')) {
             $product->images = $this->handleUploadImage($request);
             $product->save();
         }
-
         $product->translations()
-            ->create($request->only(['name', 'price', 'name', 'description', 'content', 'lang_code', 'category_id']));
+            ->create($request->only(['name', 'price', 'name', 'description', 'content', 'lang_code']));
     }
 
     public function update(Request $request, $id)
@@ -42,7 +42,7 @@ class ProductService
         $product->save();
 
         $product->translations()->where('lang_code', $request->get('lang_code'))
-            ->update($request->only(['name', 'price', 'name', 'description', 'content', 'category_id']));
+            ->update($request->only(['name', 'price', 'name', 'description', 'content']));
     }
 
 

@@ -8,6 +8,7 @@ class Product extends Model
 {
 
     protected $guarded = ['id'];
+    protected $appends = ['cover_image', 'trans'];
 
     protected $casts = [
         'images' => 'array',
@@ -27,5 +28,15 @@ class Product extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getCoverImageAttribute()
+    {
+        return cloud_link($this->images[0]);
+    }
+
+    public function getTransAttribute()
+    {
+        return $this->translations[0];
     }
 }

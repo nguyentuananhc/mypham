@@ -5,7 +5,7 @@
         <h1 class="page-title">
             <i class="icon voyager-pie-chart"></i> {{ __('string.categories') }}
         </h1>
-        <a href="{{ route('admin.categories.create', ['langCode' => 'vi', 'id' => null]) }}"
+        <a href="{{ route('admin.categories.create', ['langCode' => app()->getLocale(), 'id' => null]) }}"
            class="btn btn-success btn-add-new">
             <i class="voyager-plus"></i> <span>{{ __('voyager::generic.add_new') }}</span>
         </a>
